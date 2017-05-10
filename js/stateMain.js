@@ -6,6 +6,9 @@ var StateMain={
        game.load.image('blue', 'images/main/blocks/blue.png');
        game.load.image('green', 'images/main/blocks/green.png');
        game.load.image('yellow', 'images/main/blocks/yellow.png');
+
+       game.load.spritesheet('rings', 'images/main/rings.png', 60/*width*/, 65/*height*/, 5/*nb of cells*/);
+
     },
     
     create:function()
@@ -33,18 +36,44 @@ var StateMain={
         green.events.onInputDown.add(this.changeColor, this);
         yellow.events.onInputDown.add(this.changeColor, this);
 
-        this.grp = game.add.group();
-        this.grp.add(red);
-        this.grp.add(blue);
-        this.grp.add(green);
-        this.grp.add(yellow);
+        this.blockGroup = game.add.group();
+        this.blockGroup.add(red);
+        this.blockGroup.add(blue);
+        this.blockGroup.add(green);
+        this.blockGroup.add(yellow);
 
-        this.grp.x = game.world.centerX - this.grp.width/2;
-        this.grp.y = game.height-250;
+        this.blockGroup.x = game.world.centerX - this.blockGroup.width/2;
+        this.blockGroup.y = game.height-250;
 
+        this.ring = game.add.image(game.world.centerX, this.blockGroup.y-100, "rings");
+        this.ring.anchor.set(0.5, 0.5);
+
+        this.setListeners();
+
+    },
+    setListeners: function() {
+         game.input.onUp.add(this.resetRing, this);
     },
     changeColor: function(target) {
         console.log(target.name);
+        switch (target.name) {
+            case "red":
+                this.ring.frame=3;
+                break;
+            case "blue":
+                this.ring.frame=1;
+                break;
+            case "green":
+                this.ring.frame=2;
+                break;
+            case "yellow":
+                this.ring.frame=4;
+                break
+
+        }
+    },
+    resetRing: function() {
+        this.ring.frame=0;
     },
     
     update:function()
