@@ -66,6 +66,11 @@ var StateMain={
         this.setListeners();
         this.resetBall();
 
+        this.time = this.getTime();
+
+    },
+    getTime: function() {
+        return (new Date()).getTime()
     },
     setListeners: function() {
          game.input.onUp.add(this.resetRing, this);
@@ -108,7 +113,10 @@ var StateMain={
     
     update:function()
     {       
-        
+        var milis = this.getTime() - this.time
+        console.log('fps:', 1000/milis);
+
+        this.time = this.getTime();
     }    
     
 }
