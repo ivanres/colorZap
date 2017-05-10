@@ -8,6 +8,7 @@ var StateMain={
        game.load.image('yellow', 'images/main/blocks/yellow.png');
 
        game.load.spritesheet('rings', 'images/main/rings.png', 60/*width*/, 65/*height*/, 5/*nb of cells*/);
+       game.load.spritesheet('balls', 'images/main/balls.png', 35/*width*/, 35/*height*/, 5/*nb of cells*/);
 
     },
     
@@ -48,11 +49,25 @@ var StateMain={
         this.ring = game.add.image(game.world.centerX, this.blockGroup.y-100, "rings");
         this.ring.anchor.set(0.5, 0.5);
 
+        this.ball = game.add.image(0, 0, 'balls');
+        this.ball.anchor.set(0.5, 0.5);
+
         this.setListeners();
+        this.resetBall();
 
     },
     setListeners: function() {
          game.input.onUp.add(this.resetRing, this);
+    },
+    resetBall: function() {
+        var color = game.rnd.integerInRange(0, 5);
+        var xx = game.rnd.integerInRange(0, game.world.width);
+        var yy = game.rnd.integerInRange(0, 100);
+
+        this.ball.frame = color;
+        this.ball.x = xx;
+        this.ball.y = yy;
+
     },
     changeColor: function(target) {
         console.log(target.name);
