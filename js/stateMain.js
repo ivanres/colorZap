@@ -14,6 +14,12 @@ var StateMain={
     
     create:function()
     {
+
+        //VARS
+        this.speed = 200;
+
+        game.physics.startSystem(Phaser.Physics.Arcade);
+
         console.log("ready!")
         var red=game.add.image(0, 0, 'red');
         var blue=game.add.image(0, 100, 'blue');
@@ -46,11 +52,16 @@ var StateMain={
         this.blockGroup.x = game.world.centerX - this.blockGroup.width/2;
         this.blockGroup.y = game.height-250;
 
+        //RING
         this.ring = game.add.image(game.world.centerX, this.blockGroup.y-100, "rings");
         this.ring.anchor.set(0.5, 0.5);
 
-        this.ball = game.add.image(0, 0, 'balls');
+
+        //BALL
+        this.ball = game.add.sprite(0, 0, 'balls'); //Only sprites can have physics applied to them
         this.ball.anchor.set(0.5, 0.5);
+        //add physics to the object
+        game.physics.arcade.enable(this.ball);
 
         this.setListeners();
         this.resetBall();
@@ -67,6 +78,10 @@ var StateMain={
         this.ball.frame = color;
         this.ball.x = xx;
         this.ball.y = yy;
+
+        //this.ball.body.velocity.setTo(0, 100);
+        var rot = game.physics.arcade.moveToXY(this.ball, this.ring.x, this.ring.y, this.speed);
+        this.ball.rotation = rot;
 
     },
     changeColor: function(target) {
