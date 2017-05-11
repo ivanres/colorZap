@@ -15,11 +15,12 @@ var StateTitle={
     
     create:function()
     {
+        //ADD LOGO
         this.logo = game.add.sprite(game.world.centerX, 180, "logo");
         this.logo.anchor.set(0.5,0.5);
 
         //START BUTTON
-        this.btnStart = game.add.button(game.world.centerX, game.world.height, 'buttons', this.startGame, this, 7, 6, 7);
+        this.btnStart = game.add.button(game.world.centerX, game.world.height - 100, 'buttons', this.startGame, this, 7, 6, 7);
 		this.btnStart.anchor.set(0.5, 0.5);
         this.setListeners();
     },
