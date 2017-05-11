@@ -10,6 +10,9 @@ var StateMain={
        game.load.spritesheet('rings', 'images/main/rings.png', 60/*width*/, 65/*height*/, 5/*nb of cells*/);
        game.load.spritesheet('balls', 'images/main/balls.png', 35/*width*/, 35/*height*/, 5/*nb of cells*/);
 
+       game.load.audio('points', 'sounds/points.mp3');
+       game.load.audio('gameOver', 'sounds/gameOver.mp3');
+
     },
     
     create:function()
@@ -17,9 +20,15 @@ var StateMain={
 
         //VARS
         this.speed = 200;
+        this.incSpeed = 20;
+        this.maxSpeed = 450;
+
         score = 0;
 
         game.physics.startSystem(Phaser.Physics.Arcade);
+
+        this.pointSound = game.add.audio('points');
+        this.gameOverSound = game.add.audio('gameOver');
 
         console.log("ready!")
         var red=game.add.image(0, 0, 'red');
@@ -100,6 +109,11 @@ var StateMain={
         var rot = game.physics.arcade.moveToXY(this.ball, this.ring.x, this.ring.y, this.speed);
         this.ball.rotation = rot;
 
+        this.speed+= this.incSpeed;
+        if (this.speed > this.maxSpeed){
+            this.speed = this.maxSpeed;
+        }
+
     },
     changeColor: function(target) {
         console.log(target.name);
@@ -141,8 +155,10 @@ var StateMain={
                 this.resetBall();
                 score++;
                 this.scoreText.text=score;
+                this.pointSound.play();
             } else {
                 game.state.start("StateOver");
+                this.gameOverSound.play();
             }
         }
 
