@@ -17,6 +17,7 @@ var StateMain={
 
         //VARS
         this.speed = 200;
+        score = 0;
 
         game.physics.startSystem(Phaser.Physics.Arcade);
 
@@ -62,6 +63,17 @@ var StateMain={
         this.ball.anchor.set(0.5, 0.5);
         //add physics to the object
         game.physics.arcade.enable(this.ball);
+
+        //SCORE TEXT
+        this.scoreText = game.add.text(game.world.centerX, 150, "0");
+        this.scoreText.fill="#ffffff";
+        this.scoreText.fontSize=64;
+        this.scoreText.anchor.set(0.5, 0.5);
+
+        this.scoreLabel = game.add.text(game.world.centerX, 100, "Score");
+        this.scoreLabel.fill="#ffffff";
+        this.scoreLabel.fontSize=32;
+        this.scoreLabel.anchor.set(0.5, 0.5);
 
         this.setListeners();
         this.resetBall();
@@ -127,6 +139,8 @@ var StateMain={
 
             if (this.ball.frame == this.ring.frame){
                 this.resetBall();
+                score++;
+                this.scoreText.text=score;
             } else {
                 game.state.start("StateOver");
             }

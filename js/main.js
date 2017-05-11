@@ -1,17 +1,18 @@
 var game;
+var score;
 var useLandscape=false;
 
 window.onload = function () {
 
-var isMobile=navigator.userAgent.indexOf("Mobile");
-if (isMobile>-1)
-     {
+    var isMobile=navigator.userAgent.indexOf("Mobile");
+    if (isMobile>-1)
+    {
         isMobile=true;
-     }
-     else
-     {
+    }
+    else
+    {
         isMobile=false;
-     }
+    }
 
     if (isMobile==false) {
         //desktop laptop

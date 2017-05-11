@@ -9,6 +9,17 @@ var StateOver={
     {
         this.btnPlayAgain = game.add.button(game.world.centerX, game.world.height - 100 , 'buttons', this.playAgain, this, 1, 0, 1);
 		this.btnPlayAgain.anchor.set(0.5, 0.5);
+
+		//SCORE TEXT
+        this.scoreText = game.add.text(game.world.centerX, 150, score);
+        this.scoreText.fill="#ffffff";
+        this.scoreText.fontSize=64;
+        this.scoreText.anchor.set(0.5, 0.5);
+
+        this.scoreLabel = game.add.text(game.world.centerX, 100, "Score");
+        this.scoreLabel.fill="#ffffff";
+        this.scoreLabel.fontSize=32;
+        this.scoreLabel.anchor.set(0.5, 0.5);
     },
 
     playAgain:function() {
