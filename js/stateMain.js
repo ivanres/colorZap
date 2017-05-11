@@ -9,6 +9,7 @@ var StateMain={
 
        game.load.spritesheet('rings', 'images/main/rings.png', 60/*width*/, 65/*height*/, 5/*nb of cells*/);
        game.load.spritesheet('balls', 'images/main/balls.png', 35/*width*/, 35/*height*/, 5/*nb of cells*/);
+       game.load.spritesheet('soundButtons', 'images/ui/soundButtons.png', 32, 32, 2);
 
        game.load.audio('points', 'sounds/points.mp3');
        game.load.audio('gameOver', 'sounds/gameOver.mp3');
@@ -84,6 +85,10 @@ var StateMain={
         this.scoreLabel.fontSize=32;
         this.scoreLabel.anchor.set(0.5, 0.5);
 
+        this.soundButton = game.add.image(20,20,"soundButtons");
+        this.soundButton.inputEnabled = true;
+        this.soundButton.frame = soundOn ? 0 : 1;
+
         this.setListeners();
         this.resetBall();
 
@@ -94,7 +99,12 @@ var StateMain={
         return (new Date()).getTime()
     },
     setListeners: function() {
-         game.input.onUp.add(this.resetRing, this);
+        game.input.onUp.add(this.resetRing, this);
+        this.soundButton.events.onInputDown.add(this.toggleSound, this);
+    },
+    toggleSound: function() {
+        soundOn = !soundOn;
+        this.soundButton.frame = soundOn ? 0 : 1;
     },
     resetBall: function() {
         var color = game.rnd.integerInRange(0, 5);
@@ -155,10 +165,11 @@ var StateMain={
                 this.resetBall();
                 score++;
                 this.scoreText.text=score;
-                this.pointSound.play();
+                if (soundOn) this.pointSound.play();
             } else {
+                
+                if (soundOn) this.gameOverSound.play();
                 game.state.start("StateOver");
-                this.gameOverSound.play();
             }
         }
 

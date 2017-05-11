@@ -1,6 +1,8 @@
 var game;
 var score;
+var soundOn=true;
 var useLandscape=false;
+
 
 window.onload = function () {
 
